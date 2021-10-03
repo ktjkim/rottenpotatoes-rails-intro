@@ -6,7 +6,11 @@ class Movie < ActiveRecord::Base
 
   def self.return_all_ratings
     # https://apidock.com/rails/v2.3.8/ActiveRecord/Base/find/class
-    
+    @all_ratings = ratings.keys.uniq
+    # is it sufficient to use ratings or would I need params[:ratings]
+    # or something of the sort?
+    # controller must assign this value @all_ratings to the appropriate 
+    # instance variable  
   end
 
   def self.with_ratings(ratings_list)
@@ -18,10 +22,6 @@ class Movie < ActiveRecord::Base
       # retrieve ALL movies with those ratings 
       # :rating => ratings_list or params[:rating] => ratings_list?
     end
-  end
-
-  def return_ratings
-    @all_ratings = Movie.find params[:rating]
   end
 
 end
