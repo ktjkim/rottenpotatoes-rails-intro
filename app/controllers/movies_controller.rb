@@ -38,6 +38,17 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def return_all_ratings
+    # assign appropriate value for the collection 
+  end
+
+  def return_ratings_to_show
+    # controller must set up an empty-array value for @ratings_to_show even if 
+    # nothing is checked
+    # controller needs to know (i) how to figure out which boxes the user checked
+    # (ii) how to restrict the database query based on that result 
+  end
+
   private
   # Making "internal" methods private is not required, but is a common practice.
   # This helps make clear which methods respond to requests, and which ones do not.
