@@ -2,6 +2,9 @@ class MoviesController < ApplicationController
 
   def show
     id = params[:id] # retrieve movie ID from URI route
+    puts "======================================"
+    puts params[:id]
+    # this is executed when we actually go to "show more details about..."
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
@@ -9,8 +12,19 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
-    @ratings_to_show = []
-    # initialize rating
+    # we need this instance variable because index.html.erb must know
+    # what checkboxes should be displayed
+    if params.has_key? (:ratings)
+      @ratings_to_show = params[:ratings].keys.uniq
+    else
+      @ratings_to_show = []
+    end
+    # this is executed when the user checks some boxes and then hits refresh
+#     @ratings_to_show = params[:rating].keys.unique
+    # we now need this to check the box or not depending on what has been 
+    # selected by the user
+    # (i) how to figure out which boxes were checked by the user
+    # (ii) how to restrict DB query based on that 
   end
 
   def new
@@ -43,7 +57,6 @@ class MoviesController < ApplicationController
 
   def all_ratings
     Movie.all_ratings
-    # assign appropriate value for the collection 
   end
 
   def return_ratings_to_show
