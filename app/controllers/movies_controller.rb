@@ -8,6 +8,9 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    @all_ratings = Movie.all_ratings
+    @ratings_to_show = []
+    # initialize rating
   end
 
   def new
@@ -39,7 +42,7 @@ class MoviesController < ApplicationController
   end
 
   def all_ratings
-    Movie.
+    Movie.all_ratings
     # assign appropriate value for the collection 
   end
 

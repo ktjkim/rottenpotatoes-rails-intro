@@ -5,13 +5,12 @@ class Movie < ActiveRecord::Base
   # controller should assign that to the appropriate instance variable
 
   # self would be an instance method
-  def return_all_ratings
+  def self.all_ratings
     # https://apidock.com/rails/v2.3.8/ActiveRecord/Base/find/class
     @all_ratings = Movie.select(:rating).map(&:rating).uniq
-    # :ratings.keys.uniq
+    puts @all_ratings
+    return @all_ratings
     # record query interface 
-    # is it sufficient to use ratings or would I need params[:ratings]
-    # or something of the sort?
     # controller must assign this value @all_ratings to the appropriate 
     # instance variable  
   end
