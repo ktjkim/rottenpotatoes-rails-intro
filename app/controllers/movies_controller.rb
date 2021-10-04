@@ -38,7 +38,8 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
-  def return_all_ratings
+  def all_ratings
+    Movie.
     # assign appropriate value for the collection 
   end
 
@@ -55,4 +56,5 @@ class MoviesController < ApplicationController
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
   end
+    
 end
