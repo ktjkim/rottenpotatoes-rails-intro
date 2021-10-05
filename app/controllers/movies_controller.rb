@@ -26,7 +26,6 @@ class MoviesController < ApplicationController
     # (i) how to figure out which boxes were checked by the user
     # (ii) how to restrict DB query based on that 
     @movies = Movie.with_ratings(@ratings_to_show)
-    puts @movies
     @movies
   end
 

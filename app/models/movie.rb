@@ -19,7 +19,8 @@ class Movie < ActiveRecord::Base
     else
       puts '----a-a--a-a-a-a-a-a'
       puts ratings_list
-      Movie.where(:all, :conditions => {:rating =>ratings_list})
+      Movie.where({rating: ratings_list})
+#       Movie.where(:all, :conditions => {:rating =>ratings_list})
       # how do I determine the correct return type 
       # Movie.select returns a hash
       # Movie.where returns a Symbol
