@@ -14,10 +14,15 @@ class Movie < ActiveRecord::Base
   
   # ratings_list here is the list of movies checked by the user (may be nil)
   def self.with_ratings(ratings_list)
-    if ratings_list == nil
-      Movie.find(:all) # retrieve ALL movies
+    if ratings_list == []
+      Movie.all # retrieve ALL movies
     else
-      Movie.find(:all, :conditions => {:rating => ratings_list})
+      puts '----a-a--a-a-a-a-a-a'
+      puts ratings_list
+      Movie.where(:all, :conditions => {:rating =>ratings_list})
+      # how do I determine the correct return type 
+      # Movie.select returns a hash
+      # Movie.where returns a Symbol
     end
   end
 
