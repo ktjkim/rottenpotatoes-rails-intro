@@ -3,6 +3,7 @@ class MoviesController < ApplicationController
   def show
     id = params[:id] # retrieve movie ID from URI route
     puts "======================================"
+    # this is printed when we select a "more about [movie]"
     puts params[:id]
     # this is executed when we actually go to "show more details about..."
     @movie = Movie.find(id) # look up movie by unique ID
@@ -19,6 +20,7 @@ class MoviesController < ApplicationController
     else
       @ratings_to_show = []
     end
+
     # this is executed when the user checks some boxes and then hits refresh
 #     @ratings_to_show = params[:rating].keys.unique
     # we now need this to check the box or not depending on what has been 
@@ -26,6 +28,17 @@ class MoviesController < ApplicationController
     # (i) how to figure out which boxes were checked by the user
     # (ii) how to restrict DB query based on that 
     @movies = Movie.with_ratings(@ratings_to_show)
+    
+    if params.has_key? (:column) # to indicate the column we sort on
+      column = params[:column]
+      if column == "Title"
+        @movies = @movies.order(:title)
+        # somehow sort by title order
+      else
+        @movies = @movies.order(:release_date)
+        # somehow sort by date order 
+      end
+    end 
     @movies
   end
 
@@ -57,9 +70,9 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
-  def all_ratings
-    Movie.all_ratings
-  end
+#   def all_ratings
+#     Movie.all_ratings
+#   end
 
   def return_ratings_to_show
     # controller must set up an empty-array value for @ratings_to_show even if 
