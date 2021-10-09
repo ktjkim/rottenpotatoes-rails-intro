@@ -7,35 +7,23 @@ class MoviesController < ApplicationController
   end
 
   def index
-    puts "display here ======="
-    # There are very specific cases in which you should use the redirect, 
-    # do not always redirect. Only redirect when you don't have parameters 
-    # present in the URL but you do have session variables, so you can set
-    # up your parameter variables using your session variables in that case
-        
     @movies = Movie.all
     @all_ratings = Movie.all_ratings # tell index.html.erb which boxes to show
     
-#     # when params[:ratings] is undefined and session[:ratings] is defined
-#     if not params.has_key? (:ratings) and session.has_key? (:ratings)
-#       params[:ratings] = session[:ratings]
-#     end
-    
-#     # when params[:column] is defined and session[:column] is defined
-#     if params.has_key? (:column) and session.has_key? (:column)
-#     end
-    
     if not params.has_key? (:ratings) and not params.has_key? (:column)
       if session.has_key? (:ratings)
-        params[:ratings] = session[:ratings]
+        redirect_to movies_path(:ratings => session[:ratings])
+#         params[:ratings] = session[:ratings]
       else # params has no :ratings AND session has no :ratings
-        
       end
-
       if session.has_key? (:column)
-        params[:column] = session[:column]
+        redirect_to movies_path(:column =>session[:column])
+#         params[:column] = session[:column]
       end
     end
+    
+# redirect_to(movies_path(:sort_by => sort_by, :ratings => Hash[@ratings_to_show.map {|rating| [rating, '1']}]))
+# redirect_to movies_path(:sort=> session[:sort], :ratings => session[:ratings])
     
     if params.has_key? (:ratings)
       session[:ratings] = params[:ratings] # added
