@@ -21,11 +21,11 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-<!-- %th{:class => @title_header}= link_to 'Title', my_path(:sort => 'title'), :id => 'title_header' -->
-      <th>
+      <th class="<%= "hilite" if @selection_criterion == "Title" %>">
         <%= link_to "Movie Title", movies_path({:column => "Title", :ratings => Hash[@ratings_to_show.map {|x| [x, 1]}]}), :id => "title_header" %></th>
       <th>Rating</th>
-      <th><%= link_to "Release Date", movies_path({:column => "Date", :ratings => Hash[@ratings_to_show.map {|x| [x, 1]}]})%></th>
+      <th class="<%= "hilite" if @selection_criterion == "Date" %>">
+        <%= link_to "Release Date", movies_path({:column => "Date", :ratings => Hash[@ratings_to_show.map {|x| [x, 1]}]})%></th>
       <th>More Info</th>
     </tr>
   </thead>

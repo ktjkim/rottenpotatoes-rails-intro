@@ -10,6 +10,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+#     params[] || sessions[] 
     # detect whether no params[] were passed that indicate sorting or filtering:
     # a way to tell that the user landing on the home page NOT having followed
     # one of the special links made in part 1 and part 2
@@ -20,7 +21,8 @@ class MoviesController < ApplicationController
     # present in the URL but you do have session variables, so you can set
     # up your parameter variables using your session variables in that case
 
-
+    # sessions is created kind of exactly like params
+    
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     # we need this instance variable because index.html.erb must know
@@ -37,7 +39,8 @@ class MoviesController < ApplicationController
     
     if params.has_key? (:column) # to indicate the column we sort on
       column = params[:column]
-      @column = params[:column]
+      
+      @selection_criterion = params[:column]
       # column selected for sorting should appear with a yellow-orange background
       # selected column header should have 2 additional CSS classes added
       # 1. hilite
