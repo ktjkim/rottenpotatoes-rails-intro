@@ -25,7 +25,7 @@
         <%= link_to "Movie Title", movies_path({:column => "Title", :ratings => Hash[@ratings_to_show.map {|x| [x, 1]}]}), :id => "title_header" %></th>
       <th>Rating</th>
       <th class="<%= "hilite" if @selection_criterion == "Date" %>">
-        <%= link_to "Release Date", movies_path({:column => "Date", :ratings => Hash[@ratings_to_show.map {|x| [x, 1]}]})%></th>
+        <%= link_to "Release Date", movies_path({:column => "Date", :ratings => Hash[@ratings_to_show.map {|x| [x, 1]}]}), :id => "release_date_header"%></th>
       <th>More Info</th>
     </tr>
   </thead>

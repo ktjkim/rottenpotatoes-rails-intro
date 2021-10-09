@@ -2,7 +2,6 @@ class MoviesController < ApplicationController
 
   def show # show more details about...
     id = params[:id] || session[:id] # retrieve movie ID from URI route
-    puts "=====show====="
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
@@ -12,12 +11,21 @@ class MoviesController < ApplicationController
     # do not always redirect. Only redirect when you don't have parameters 
     # present in the URL but you do have session variables, so you can set
     # up your parameter variables using your session variables in that case
-    
+        
     @movies = Movie.all
     @all_ratings = Movie.all_ratings # tell index.html.erb which boxes to show
-    puts "-----index-----"
-    puts params
+    
+    if not params.has_key? (:ratings) and not params.has_key? (:column)
+      if session.has_key? (:ratings)
+        params[:ratings] = session[:ratings]
+      end
+      if session.has_key? (:column)
+        params[:column] = session[:column]
+      end
+    end
+    
     if params.has_key? (:ratings)
+      session[:ratings] = params[:ratings] # added
       @ratings_to_show = params[:ratings].keys.uniq
     else
       @ratings_to_show = []
@@ -26,8 +34,8 @@ class MoviesController < ApplicationController
     @movies = Movie.with_ratings(@ratings_to_show)
     
     if params.has_key? (:column) # to indicate the column we sort on
-      column = params[:column]
-      
+      column = params[:column] 
+      session[:column] = params[:column] # added
       @selection_criterion = params[:column]
       if column == "Title"
         @movies = @movies.order(:title)
