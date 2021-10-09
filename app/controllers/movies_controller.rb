@@ -4,7 +4,6 @@ class MoviesController < ApplicationController
     id = params[:id] # retrieve movie ID from URI route
     puts "======================================"
     # this is printed when we select a "more about [movie]"
-    puts params[:id]
     # this is executed when we actually go to "show more details about..."
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
@@ -15,28 +14,31 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     # we need this instance variable because index.html.erb must know
     # what checkboxes should be displayed
+    puts "-abc-abca-abc-abca-b"
+    puts params
     if params.has_key? (:ratings)
       @ratings_to_show = params[:ratings].keys.uniq
     else
       @ratings_to_show = []
     end
 
-    # this is executed when the user checks some boxes and then hits refresh
-#     @ratings_to_show = params[:rating].keys.unique
-    # we now need this to check the box or not depending on what has been 
-    # selected by the user
-    # (i) how to figure out which boxes were checked by the user
-    # (ii) how to restrict DB query based on that 
     @movies = Movie.with_ratings(@ratings_to_show)
+    # the problem is that at the moment, params only has EITHER :ratings OR :column
+    # 
     
     if params.has_key? (:column) # to indicate the column we sort on
       column = params[:column]
+      @column = params[:column]
+      # column selected for sorting should appear with a yellow-orange background
+      # selected column header should have 2 additional CSS classes added
+      # 1. hilite
+      # 2. utility class from Bootstrap Colors
+      # set controller variables that are used to conditionally set the CSS class
+      
       if column == "Title"
         @movies = @movies.order(:title)
-        # somehow sort by title order
       else
         @movies = @movies.order(:release_date)
-        # somehow sort by date order 
       end
     end 
     @movies
@@ -70,16 +72,13 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
-#   def all_ratings
-#     Movie.all_ratings
-#   end
 
-  def return_ratings_to_show
-    # controller must set up an empty-array value for @ratings_to_show even if 
-    # nothing is checked
-    # controller needs to know (i) how to figure out which boxes the user checked
-    # (ii) how to restrict the database query based on that result 
-  end
+#   def return_ratings_to_show
+#     # controller must set up an empty-array value for @ratings_to_show even if 
+#     # nothing is checked
+#     # controller needs to know (i) how to figure out which boxes the user checked
+#     # (ii) how to restrict the database query based on that result 
+#   end
 
   private
   # Making "internal" methods private is not required, but is a common practice.
