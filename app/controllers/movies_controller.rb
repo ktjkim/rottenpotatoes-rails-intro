@@ -12,18 +12,15 @@ class MoviesController < ApplicationController
     
     if not params.has_key? (:ratings) and not params.has_key? (:column)
       if session.has_key? (:ratings)
-        redirect_to movies_path(:ratings => session[:ratings])
+        redirect_to movies_path(:ratings => session[:ratings]) and return
 #         params[:ratings] = session[:ratings]
       else # params has no :ratings AND session has no :ratings
       end
       if session.has_key? (:column)
-        redirect_to movies_path(:column =>session[:column])
+        redirect_to movies_path(:column => session[:column]) and return
 #         params[:column] = session[:column]
       end
     end
-    
-# redirect_to(movies_path(:sort_by => sort_by, :ratings => Hash[@ratings_to_show.map {|rating| [rating, '1']}]))
-# redirect_to movies_path(:sort=> session[:sort], :ratings => session[:ratings])
     
     if params.has_key? (:ratings)
       session[:ratings] = params[:ratings] # added
