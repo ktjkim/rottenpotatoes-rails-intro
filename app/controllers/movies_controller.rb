@@ -15,6 +15,7 @@ class MoviesController < ApplicationController
         redirect_to movies_path(:ratings => session[:ratings]) and return
 #         params[:ratings] = session[:ratings]
       else # params has no :ratings AND session has no :ratings
+        # nothing to do in this case
       end
       if session.has_key? (:column)
         redirect_to movies_path(:column => session[:column]) and return
