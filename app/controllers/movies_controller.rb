@@ -10,6 +10,17 @@ class MoviesController < ApplicationController
   end
 
   def index
+    # detect whether no params[] were passed that indicate sorting or filtering:
+    # a way to tell that the user landing on the home page NOT having followed
+    # one of the special links made in part 1 and part 2
+    # if the user explicitly includes new sorting/filtering settings in params[]
+    # the new values of those settings should then be saved 
+    # There are very specific cases in which you should use the redirect, 
+    # do not always redirect. Only redirect when you don't have parameters 
+    # present in the URL but you do have session variables, so you can set
+    # up your parameter variables using your session variables in that case
+
+
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     # we need this instance variable because index.html.erb must know
@@ -23,8 +34,6 @@ class MoviesController < ApplicationController
     end
 
     @movies = Movie.with_ratings(@ratings_to_show)
-    # the problem is that at the moment, params only has EITHER :ratings OR :column
-    # 
     
     if params.has_key? (:column) # to indicate the column we sort on
       column = params[:column]
@@ -41,6 +50,8 @@ class MoviesController < ApplicationController
         @movies = @movies.order(:release_date)
       end
     end 
+#     @movies = Movie.with_ratings(@ratings_to_show)
+
     @movies
   end
 
