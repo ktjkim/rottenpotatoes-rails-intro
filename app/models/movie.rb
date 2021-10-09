@@ -8,7 +8,6 @@ class Movie < ActiveRecord::Base
   def self.all_ratings
     # https://apidock.com/rails/v2.3.8/ActiveRecord/Base/find/class
     @all_ratings = Movie.select(:rating).map(&:rating).uniq
-    puts @all_ratings
     return @all_ratings
   end
   
@@ -17,13 +16,7 @@ class Movie < ActiveRecord::Base
     if ratings_list == []
       Movie.all # retrieve ALL movies
     else
-      puts '----a-a--a-a-a-a-a-a'
-      puts ratings_list
       Movie.where({rating: ratings_list})
-#       Movie.where(:all, :conditions => {:rating =>ratings_list})
-      # how do I determine the correct return type 
-      # Movie.select returns a hash
-      # Movie.where returns a Symbol
     end
   end
 

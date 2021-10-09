@@ -18,7 +18,10 @@ class MoviesController < ApplicationController
     if not params.has_key? (:ratings) and not params.has_key? (:column)
       if session.has_key? (:ratings)
         params[:ratings] = session[:ratings]
+      else # params has no :ratings AND session has no :ratings
+        
       end
+      
       if session.has_key? (:column)
         params[:column] = session[:column]
       end
