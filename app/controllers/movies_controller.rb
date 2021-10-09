@@ -1,33 +1,21 @@
 class MoviesController < ApplicationController
 
-  def show
-    id = params[:id] # retrieve movie ID from URI route
-    puts "======================================"
-    # this is printed when we select a "more about [movie]"
-    # this is executed when we actually go to "show more details about..."
+  def show # show more details about...
+    id = params[:id] || session[:id] # retrieve movie ID from URI route
+    puts "=====show====="
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
 
   def index
-#     params[] || sessions[] 
-    # detect whether no params[] were passed that indicate sorting or filtering:
-    # a way to tell that the user landing on the home page NOT having followed
-    # one of the special links made in part 1 and part 2
-    # if the user explicitly includes new sorting/filtering settings in params[]
-    # the new values of those settings should then be saved 
     # There are very specific cases in which you should use the redirect, 
     # do not always redirect. Only redirect when you don't have parameters 
     # present in the URL but you do have session variables, so you can set
     # up your parameter variables using your session variables in that case
-
-    # sessions is created kind of exactly like params
     
     @movies = Movie.all
-    @all_ratings = Movie.all_ratings
-    # we need this instance variable because index.html.erb must know
-    # what checkboxes should be displayed
-    puts "-abc-abca-abc-abca-b"
+    @all_ratings = Movie.all_ratings # tell index.html.erb which boxes to show
+    puts "-----index-----"
     puts params
     if params.has_key? (:ratings)
       @ratings_to_show = params[:ratings].keys.uniq
@@ -41,20 +29,13 @@ class MoviesController < ApplicationController
       column = params[:column]
       
       @selection_criterion = params[:column]
-      # column selected for sorting should appear with a yellow-orange background
-      # selected column header should have 2 additional CSS classes added
-      # 1. hilite
-      # 2. utility class from Bootstrap Colors
-      # set controller variables that are used to conditionally set the CSS class
-      
       if column == "Title"
         @movies = @movies.order(:title)
       else
         @movies = @movies.order(:release_date)
       end
+      
     end 
-#     @movies = Movie.with_ratings(@ratings_to_show)
-
     @movies
   end
 
@@ -85,14 +66,6 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
-
-
-#   def return_ratings_to_show
-#     # controller must set up an empty-array value for @ratings_to_show even if 
-#     # nothing is checked
-#     # controller needs to know (i) how to figure out which boxes the user checked
-#     # (ii) how to restrict the database query based on that result 
-#   end
 
   private
   # Making "internal" methods private is not required, but is a common practice.
