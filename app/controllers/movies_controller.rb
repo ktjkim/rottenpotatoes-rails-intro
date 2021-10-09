@@ -15,6 +15,7 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @all_ratings = Movie.all_ratings # tell index.html.erb which boxes to show
     
+    # added
     if not params.has_key? (:ratings) and not params.has_key? (:column)
       if session.has_key? (:ratings)
         params[:ratings] = session[:ratings]
